@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "name": "Un-Safelinks",
+    "description": "Replace URLs which have been rewritten by Office 365 Advanced Threat Protection with the original URL.",
+    "version": "1.3",
+    "author": "Anton Sarukhanov",
+    "author": "Anton Sarukhanov",
+    "applications": {
+        "gecko": {
+            "id": "unsafelinks@ant.sr",
+            "strict_min_version": "66.0"
+        }
+    },
+    "permissions": [
+        "messagesRead"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "icons": {
+        "64": "icon.png"
+    }
+}
