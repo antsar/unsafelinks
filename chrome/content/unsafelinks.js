@@ -16,7 +16,32 @@ var unsafelinks = {
     onMessageLoad: function(event) {
         // Replace each safelinks URL in the message body with the original URL.
         var body = event.originalTarget.body;
-        body.innerHTML = body.innerHTML.replace(unsafelinks.urlRegex, unsafelinks.replacer);
+        unsafelinks.replaceInNode(event.originalTarget.body);
+    },
+
+    replaceInNode: function(node) {
+        // Recursively replace URLs in this node and child nodes.
+        if (node.childNodes.length > 0) {
+            for (let i = 0; i < node.childNodes.length; i++) {
+                unsafelinks.replaceInNode(node.childNodes[i]);
+            }
+        }
+
+        // If this is a text node, replace URLs in the text.
+        if (node.nodeType == Node.TEXT_NODE && node.nodeValue != '') {
+            node.nodeValue = node.nodeValue.replace(unsafelinks.urlRegex, unsafelinks.replacer);
+        }
+
+        // Replace URLs in this node's attribute values.
+        // We're expecting <a href> <img src> and similar, but can't
+        // predict what other attrs may contain URLs. So check all of them.
+        if (node.attributes) {
+            for (let i = 0; i < node.attributes.length; i++) {
+                if (node.attributes[i].specified) {
+                    node.attributes[i].value = node.attributes[i].value.replace(unsafelinks.urlRegex, unsafelinks.replacer);
+                }
+            }
+        }
     },
 
     // Regular expression matching a safelinks-encoded URL.
