@@ -45,7 +45,7 @@ var unsafelinks = {
     },
 
     // Regular expression matching a safelinks-encoded URL.
-    urlRegex: /https?:\/\/(?:.+?\.)?safelinks\.protection\.outlook\.com\/([A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=%]*)/gi,
+    urlRegex: /https?:\/\/(?:.+?\.)?safelinks\.protection\.outlook\.com\/(?:[^\?]+)?([A-Za-z0-9\-\._~:\/\?#\[\]@!$&'\(\)\*\+,;\=%]*)/gi,
 
     replacer: function(url, queryString){
         // Extract the "url" parameter from the URL, if it exists.
